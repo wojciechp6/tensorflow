@@ -92,7 +92,7 @@ BuiltinOpResolver::BuiltinOpResolver() {
              /* max_version = */ 3);
   AddBuiltin(BuiltinOperator_ADD, Register_ADD(),
              /* min_version */ 1,
-             /* max_version */ 3);
+             /* max_version */ 4);
   AddBuiltin(BuiltinOperator_SPACE_TO_BATCH_ND, Register_SPACE_TO_BATCH_ND(),
              /* min_version = */ 1,
              /* max_version = */ 3);
@@ -329,6 +329,9 @@ BuiltinOpResolver::BuiltinOpResolver() {
             tflite::ops::custom::Register_AUDIO_SPECTROGRAM());
   AddCustom("TFLite_Detection_PostProcess",
             tflite::ops::custom::Register_DETECTION_POSTPROCESS());
+  // By definition, all of the ops added above are not user-defined ops,
+  // since they are supported by BuiltinOpResolver.
+  may_directly_contain_user_defined_ops_ = false;
 }
 
 OpResolver::TfLiteDelegatePtrVector BuiltinOpResolver::GetDelegates(

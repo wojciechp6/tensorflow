@@ -730,6 +730,7 @@ cuda_py_test(
         ":benchmarks_test_base",
         ":context",
         ":test",
+        "//tensorflow/python:array_ops",
         "//tensorflow/python:math_ops",
         "//tensorflow/python:random_ops",
     ],
@@ -941,6 +942,7 @@ tf_xla_py_test(
     tags = [
         "no_mac",
         "no_pip",
+        "no_tfrt",  # TODO(b/185944215)
         "no_windows",
     ],
     use_xla_device = False,

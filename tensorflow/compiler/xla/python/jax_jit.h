@@ -65,7 +65,8 @@ struct CallSignature {
   bool jax_enable_x64;
 
   // Opaque additional context that should be included as part of the cache key.
-  pybind11::object extra_jit_context;
+  pybind11::object global_extra_jit_context;
+  absl::optional<pybind11::object> thread_local_extra_jit_context;
 
   bool operator==(const CallSignature& other) const;
   bool operator!=(const CallSignature& other) const {
@@ -94,7 +95,7 @@ struct ParsedArgumentsAsBuffers {
   std::vector<xla::PjRtBuffer*> arg_buffers;
   // We may need to keep these objects around, because:
   // (a) we need to extend the lifetime of objects created within
-  //    `ConvertArgsToBuffers`
+  //    `CopyBuffersToDevice`
   // (b) `arg_buffers` do not maintain ownership
   std::vector<std::unique_ptr<xla::PjRtBuffer>> keep_alive;
 };
